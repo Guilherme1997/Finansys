@@ -11,7 +11,7 @@
 
 <div class="row">
   <div class="col-6">
-    <h3>Categorias</h3>
+
   </div>
   <div class="col-6 flex-end">
     <a routerLink="new" role="button" class="btn btn-light btn-sm btn-newcategorie">
@@ -19,7 +19,6 @@
     </a>
   </div>
 </div>
-
 <div class="row mt-4">
   <div class="col-12">
     <table class="table table-hover">
@@ -30,18 +29,17 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>
-            <strong>Lazer</strong><br>
-            <small>Cinema, parque etc</small>
+        <tr *ngFor="let category of categories;index as i">
+          <td>{{i+1}} -
+            <strong>{{category.name}}</strong><br>
+            <small>{{category.description}}</small>
           </td>
           <td>
             <a [routerLink]="[12,'edit']" role="button" class="btn-table-actions btn btn-light btn-sm mr-4">Editar</a>
-            <button (click)="deleteCategory()" type="button"
+            <button data-toggle="modal" data-target="#confirmDelete" (click)="deleteCategory(category)" type="button"
               class="btn-table-actions btn btn-danger btn-sm">Deletar</button>
           </td>
         </tr>
-
       </tbody>
     </table>
   </div>
