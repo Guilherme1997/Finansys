@@ -1,0 +1,44 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a routerLink="/">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a routerLink="/categories">Categorias</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+      Nova categoria
+    </li>
+  </ol>
+</nav>
+<div class="row">
+  <div class="col-6">
+  </div>
+  <div class="col-6 flex-end">
+    <a routerLink="/categories" role="button" class="btn btn-light btn-sm btn-newcategorie">
+      Voltar
+    </a>
+  </div>
+</div>
+<div class="card mt-4">
+  <div class="col-12">
+    <div class="row">
+      <div class="col-4">
+        <div class="form-group">
+          <label for="nome">Nome</label>
+          <input id="nome" class="form-control" />
+        </div>
+      </div>
+      <div class="col-8">
+        <div class="form-group">
+          <label for="descricao">Descrição</label>
+          <input id="descricao" class="form-control" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mt-4 float-right">
+  <button type="button" class="mb-4 btn btn-primary">Adicionar</button>
+</div>
