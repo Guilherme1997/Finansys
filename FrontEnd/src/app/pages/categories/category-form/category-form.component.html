@@ -16,32 +16,37 @@
     </div>
     <div class="col-6 flex-end">
         <a routerLink="/categories" role="button" class="btn btn-light btn-sm btn-newcategorie">
-      Voltar
-    </a>
+            Voltar
+        </a>
     </div>
 </div>
 <h1>{{pageTitle}}</h1>
-<form [formGroup]="categoryForm">
+<form [formGroup]="categoryForm" (submit)="submitForm()">
     <div class="card mt-4">
         <div class="col-12">
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
                         <label for="nome">Nome</label>
-                        <input id="nome" class="form-control" />
+                        <input id="nome" class="form-control" formControlName="name" />
+                        <div class="text-danger"
+                            *ngIf="categoryForm.get('name').invalid && categoryForm.get('name').touched">
+                            <div *ngIf="categoryForm.get('name').errors.required">Dados Obrigatórios</div>
+                            <div *ngIf="categoryForm.get('name').errors.minlength">Deve ter no mínimo 2 caracteres</div>
+
+                        </div>
                     </div>
                 </div>
                 <div class="col-8">
                     <div class="form-group">
                         <label for="descricao">Descrição</label>
-                        <input id="descricao" class="form-control" />
+                        <input id="descricao" class="form-control" formControlName="description" />
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="mt-4 float-right">
+        <button [disabled]="submittinForm || categoryForm.invalid" type="submit" class="mb-4 btn btn-primary">Salvar</button>
+    </div>
 </form>
-
-<div class="mt-4 float-right">
-    <button type="button" class="mb-4 btn btn-primary">Adicionar</button>
-</div>
