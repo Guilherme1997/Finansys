@@ -22,7 +22,7 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
   public categoryForm: FormGroup;
   public pageTitle: string;
   private serverErrorMessages: string[] = null;
-  private submittinForm: boolean = false;
+  public submittinForm: boolean = false;
   private category: Category = new Category();
 
   constructor(
@@ -93,24 +93,26 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
   private createCategory() {
     const category: Category = Object.assign(new Category(), this.categoryForm.value);
     this.categoryService.create(category).subscribe(
-      retorno => this.actionsForSuccess(retorno),
+      () => this.actionsForSuccess(),
       error => this.actionsForError(error)
     )
   }
 
   private updateCategory() {
     const category: Category = Object.assign(new Category(), this.categoryForm.value);
-    this.categoryService.create(category).subscribe(
-      () => alert("Editado com sucesso")
+
+    this.categoryService.update(category).subscribe(
+      () => this.actionsForSuccess(),
+      error => this.actionsForError(error)
     );
 
   }
 
-  private actionsForSuccess(category: Category) {
-    alert("Cadastrado com sucesso");
+  private actionsForSuccess() {
+    alert("Solicitação processada com sucesso");
 
     this.router.navigateByUrl("categories", { skipLocationChange: true }).then(
-      () => this.router.navigate(["categories", category.id, "edit"])
+      () => this.router.navigate(["categories"])
     );
   }
 
@@ -120,7 +122,13 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
       this.serverErrorMessages = JSON.parse(error.body).errors
       return
     }
-    this.serverErrorMessages = ["Ocorreu um erro interno no servidor"];
+
+    if(error.status == 404){
+      this.serverErrorMessages = ["Problema ao se comunica com o servidor"];
+    }
+    else{
+      this.serverErrorMessages = ["Ocorreu um erro interno no servidor"];
+    }
 
   }
 
