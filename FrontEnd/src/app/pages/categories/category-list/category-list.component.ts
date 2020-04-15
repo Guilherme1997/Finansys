@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+
 import { CategoryService } from "../shared/category.service";
+
 import { Category } from "../shared/category.model";
+
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-category-list',
@@ -10,7 +15,7 @@ import { Category } from "../shared/category.model";
 })
 export class CategoryListComponent implements OnInit {
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.getCategories();
@@ -30,7 +35,10 @@ export class CategoryListComponent implements OnInit {
     const confirmDelet = confirm("Deseja realmente deletar esta categoria?");
     if (confirmDelet === true)
       this.categoryService.delete(category.id).subscribe(
-        () => this.categories = this.categories.filter(element => element != category)
+        () => {
+        this.categories = this.categories.filter(element => element != category),
+          this.toastr.success('Categoria excluida', 'Sucesso!')
+        }
       );
     else return
   }

@@ -14,11 +14,7 @@
 <div class="row">
     <div class="col-6">
     </div>
-    <div class="col-6 flex-end">
-        <a routerLink="/categories" role="button" class="btn btn-light btn-sm btn-newcategorie">
-            Voltar
-        </a>
-    </div>
+
 </div>
 <h1>{{pageTitle}}</h1>
 <form [formGroup]="categoryForm" (submit)="submitForm()">
@@ -54,5 +50,11 @@
     </div>
     <div class="mt-4 float-right">
         <button [disabled]="submittinForm || categoryForm.invalid" type="submit" class="mb-4 btn btn-primary">Salvar</button>
+    </div>
+
+    <div class="mt-4 float-right">
+        <a routerLink="/categories" role="button" class="btn btn-light btn-newcategorie mr-4">
+            Voltar
+        </a>
     </div>
 </form>

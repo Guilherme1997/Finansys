@@ -10,6 +10,8 @@ import { CategoryService } from "../shared/category.service";
 
 import { switchMap } from "rxjs/operators";
 
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-category-form',
@@ -17,6 +19,7 @@ import { switchMap } from "rxjs/operators";
   styleUrls: ['./category-form.component.css'],
   providers: [FormBuilder]
 })
+
 export class CategoryFormComponent implements OnInit, AfterContentChecked {
   public currentAction: string;
   public categoryForm: FormGroup;
@@ -26,6 +29,7 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
   private category: Category = new Category();
 
   constructor(
+    private toastr: ToastrService,
     private categoryService: CategoryService,
     private activatedRoute: ActivatedRoute,
     private formBuildr: FormBuilder,
@@ -85,10 +89,11 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
           this.category = category
           this.categoryForm.patchValue(this.category)
         },
-        () => alert("Ocorreu um erro no servidor, tente mais tarde")
+        () => this.toastr.success('Ocorreu um erro no servidor, tente mais tarde', 'Erro!')
       )
     }
   }
+
 
   private createCategory() {
     const category: Category = Object.assign(new Category(), this.categoryForm.value);
@@ -109,24 +114,23 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
   }
 
   private actionsForSuccess() {
-    alert("Solicitação processada com sucesso");
-
+    this.toastr.success('Solicitação processada com sucesso', 'Cadastrado com sucesso');
     this.router.navigateByUrl("categories", { skipLocationChange: true }).then(
       () => this.router.navigate(["categories"])
     );
   }
 
   private actionsForError(error) {
-    alert("Ocorreu um erro no servidor!");
+    this.toastr.error('Por favor, contate o administrador', 'Serviço indisponível no momento');
     if (error.status == 422) {
       this.serverErrorMessages = JSON.parse(error.body).errors
       return
     }
 
-    if(error.status == 404){
+    if (error.status == 404) {
       this.serverErrorMessages = ["Problema ao se comunica com o servidor"];
     }
-    else{
+    else {
       this.serverErrorMessages = ["Ocorreu um erro interno no servidor"];
     }
 
