@@ -1,5 +1,5 @@
 # Finansys FrontEnd
-
+# teste
 ## Requisitos
 - Node.js (recomendado: versão 18.x ou superior)
 - npm (geralmente instalado junto com o Node.js)
