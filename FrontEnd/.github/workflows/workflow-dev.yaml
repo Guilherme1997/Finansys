@@ -1,12 +1,13 @@
+name: Build Angular on Pull Request Created
+
 on:
   pull_request:
-    types: [closed]
+    types: [opened]   # dispara somente quando o PR é aberto
     branches:
-      - development
+      - development   # apenas PRs com destino para a branch "development"
 
 jobs:
   build:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
@@ -16,7 +17,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '14'
+          node-version: '14'   # compatível com Angular 10
 
       - name: Install dependencies
         run: npm install
